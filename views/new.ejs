@@ -1,0 +1,79 @@
+<% layout("/layouts/boilerplate") %>
+    <div class="row show">
+        <h1 class="text-center">New Campground</h1>
+        <div class="col-md-6 offset-md-3">
+            <form action="/campgrounds" method="POST" novalidate class="form-group needs-validation"
+                enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label for="title" class="form-label">Title</label>
+                    <input type="text" class="form-control" id="title" name="campground[title]" required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                    <div class="invalid-feedback">
+                        please enter the Camp name.
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="location" class="form-label">Location</label>
+                    <input type="text" class="form-control" id="location" name="campground[location]" required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                    <div class="invalid-feedback">
+                        please enter Location.
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="image" class="form-label">Images</label>
+                    <input type="file" name="image" class="form-control" id="image" multiple>
+                </div>
+                <div class="mb-3">
+                    <label for="price" class="form-label">Campground price</label>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">$</span>
+                        <input type="number" min="0" name="campground[price]" class="form-control" id="price"
+                            placeholder="00" required>
+                    </div>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                    <div class="invalid-feedback">
+                        please enter the valid price.
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="description" class="form-label">description</label>
+                    <textarea type="text" class="form-control" id="description" name="campground[description]"
+                        required></textarea>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                    <div class="invalid-feedback">
+                        please enter Description.
+                    </div>
+                </div>
+
+                <button class="btn btn-outline-success mt-2 mb-5">Add Campground</button>
+            </form>
+        </div>
+    </div>
+<script>
+
+ const input = document.querySelector('#image');
+
+        // Listen for files selection
+        input.addEventListener('change', (e) => {
+            // Retrieve all files
+            const files = input.files;
+
+            // Check files count
+            if (files.length > 10) {
+                alert("Max upload is 10")
+                input.value = null
+                return;
+            }
+            // TODO: continue uploading on server
+        });
+</script>

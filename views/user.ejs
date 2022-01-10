@@ -1,0 +1,69 @@
+<% layout("/layouts/boilerplate")%> 
+<div class="container indexcont">
+<% if(campgrounds.length){ %> 
+ <div class="text-center">
+<h1 >CAMPGROUND BY <%=campgrounds[0].author.username.toUpperCase() %> </h1>
+</div>
+    <% for (let campground of campgrounds){%>
+
+        <div class="m-5 card border-0">
+            <div class="row">
+                <div class="col-md-4">
+            <a href="/campgrounds/<%=campground._id %>">
+              <% if(campground.image.length){  %> 
+                    <img class="img-fluid" id="indexphoto" src="<%=campground.image[0].url %>" alt="Camp-img">
+                <% }else{ %> 
+             <img src="/images/camp.png" class="img-fluid" id="indexphoto" alt="Camp-img">
+                    <% } %> </a>
+                </div>
+                <div class="col-md-7">
+                    <div class="card-body indexcard-body">
+                        <h3 class="card-title">
+                           <a href="/campgrounds/<%=campground._id %>" class="naming" ><%=campground.title %></a>
+                        </h3>
+                         <span class="badge bg-success mb-2">
+                          <i class="fi-xnsuxl-map-marker-solid"></i> <%=campground.location %>
+                           </span>   
+                        <p class="card-text">
+                            <%=campground.description %>
+                        </p>   
+                        <p class="card-text">
+                           <% function convert(str) {
+                               var date = new Date(str),
+                               month = ("0" + (date.getMonth() + 1)).slice(-2),
+                              day = ("0" + date.getDate()).slice(-2);
+                              return [day, month,date.getFullYear()].join("/");} %> 
+                           <span class="text-muted">Created at : <%=convert(campground.createdAt) %> </span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <% }%>
+<% }else{ %> 
+ <div class="text-center">
+  <h1>NO CAMPGROUND BY <%=currentUser.username.toUpperCase()%> </h1>
+</div> 
+<% } %> 
+<nav aria-label="..." class="mb-5" >
+  <ul class="pagination justify-content-center">
+<%for (let i = 1; i < count; i++) {  %>
+<% if(page == i ){ %>
+ <li class="page-item disabled">
+      <a class="page-link" href="/user/<%=campgrounds[0].author._id%>/?page=<%=i %>" tabindex="-1"><%=i %></a>
+    </li>
+<% }else{ %> 
+    <li class="page-item ">
+      <a class="page-link" href="/user/<%=campgrounds[0].author._id%>/?page=<%=i %>"><%=i %></a>
+    </li>
+<% } %> 
+<% } %> 
+  </ul>
+</nav>
+</div>
+<div id="cluster-map"></div>
+<script>
+     const maptoken = '<%-process.env.MAPBOX_TOKEN %>'
+    const campgrounds = { features: <%-JSON.stringify(allCamp) %>};
+</script>
+<script src="/clusterMap.js"></script>
